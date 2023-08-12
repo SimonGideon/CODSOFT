@@ -4,7 +4,7 @@
 <div align="center">
   <br/>
 
-  <h3><b>PROJECT README</b></h3>
+  <h3><b>Dojo Travellers Booking System</b></h3>
 
 </div>
 
