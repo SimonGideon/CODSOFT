@@ -238,3 +238,66 @@ FOREIGN KEY ("booking_station_id")
   [1m[36mActiveRecord::InternalMetadata Load (12.5ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
   [1m[35m (0.6ms)[0m  [1m[34mSELECT pg_advisory_unlock(6241598612536964460)[0m
   [1m[36mActiveRecord::SchemaMigration Pluck (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (1.1ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6241598612536964460)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to AddTrackReferencesToUser (20230823215742)
+  [1m[36mTRANSACTION (2.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (23.1ms)[0m  [1m[35mALTER TABLE "users" ADD "track_id" bigint NOT NULL[0m
+  [1m[35m (148.0ms)[0m  [1m[35mCREATE INDEX "index_users_on_track_id" ON "users" ("track_id")[0m
+  [1m[35m (169.0ms)[0m  [1m[35mALTER TABLE "users" ADD CONSTRAINT "fk_rails_3e68ab4c3a"
+FOREIGN KEY ("track_id")
+  REFERENCES "tracks" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (1.0ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230823215742"]]
+  [1m[36mTRANSACTION (20.3ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddRefencesToBus (20230823215933)
+  [1m[36mTRANSACTION (0.8ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.0ms)[0m  [1m[35mALTER TABLE "buses" ADD "ticket_id" bigint NOT NULL[0m
+  [1m[35m (68.5ms)[0m  [1m[35mCREATE INDEX "index_buses_on_ticket_id" ON "buses" ("ticket_id")[0m
+  [1m[35m (42.3ms)[0m  [1m[35mALTER TABLE "buses" ADD CONSTRAINT "fk_rails_bbc0c16d0a"
+FOREIGN KEY ("ticket_id")
+  REFERENCES "tickets" ("id")
+[0m
+  [1m[35m (2.1ms)[0m  [1m[35mALTER TABLE "buses" ADD "track_id" bigint NOT NULL[0m
+  [1m[35m (55.3ms)[0m  [1m[35mCREATE INDEX "index_buses_on_track_id" ON "buses" ("track_id")[0m
+  [1m[35m (18.6ms)[0m  [1m[35mALTER TABLE "buses" ADD CONSTRAINT "fk_rails_707855105f"
+FOREIGN KEY ("track_id")
+  REFERENCES "tracks" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230823215933"]]
+  [1m[36mTRANSACTION (120.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddReferencesToTrack (20230823220225)
+  [1m[36mTRANSACTION (0.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (0.6ms)[0m  [1m[35mALTER TABLE "tracks" ADD "bus_id" bigint NOT NULL[0m
+  [1m[35m (57.8ms)[0m  [1m[35mCREATE INDEX "index_tracks_on_bus_id" ON "tracks" ("bus_id")[0m
+  [1m[35m (1.3ms)[0m  [1m[35mALTER TABLE "tracks" ADD CONSTRAINT "fk_rails_1794e6c02f"
+FOREIGN KEY ("bus_id")
+  REFERENCES "buses" ("id")
+[0m
+  [1m[35m (0.5ms)[0m  [1m[35mALTER TABLE "tracks" ADD "ticket_id" bigint NOT NULL[0m
+  [1m[35m (67.5ms)[0m  [1m[35mCREATE INDEX "index_tracks_on_ticket_id" ON "tracks" ("ticket_id")[0m
+  [1m[35m (24.9ms)[0m  [1m[35mALTER TABLE "tracks" ADD CONSTRAINT "fk_rails_f07b4b3b1b"
+FOREIGN KEY ("ticket_id")
+  REFERENCES "tickets" ("id")
+[0m
+  [1m[35m (1.0ms)[0m  [1m[35mALTER TABLE "tracks" ADD "booking_stations_id" bigint NOT NULL[0m
+  [1m[35m (73.9ms)[0m  [1m[35mCREATE INDEX "index_tracks_on_booking_stations_id" ON "tracks" ("booking_stations_id")[0m
+  [1m[35m (65.6ms)[0m  [1m[35mALTER TABLE "tracks" ADD CONSTRAINT "fk_rails_8d3b400c68"
+FOREIGN KEY ("booking_stations_id")
+  REFERENCES "booking_stations" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230823220225"]]
+  [1m[36mTRANSACTION (14.6ms)[0m  [1m[35mCOMMIT[0m
+Migrating to AddTicketToBookingStation (20230823220325)
+  [1m[36mTRANSACTION (1.0ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (1.6ms)[0m  [1m[35mALTER TABLE "booking_stations" ADD "ticket_id" bigint NOT NULL[0m
+  [1m[35m (35.3ms)[0m  [1m[35mCREATE INDEX "index_booking_stations_on_ticket_id" ON "booking_stations" ("ticket_id")[0m
+  [1m[35m (22.0ms)[0m  [1m[35mALTER TABLE "booking_stations" ADD CONSTRAINT "fk_rails_4a9e02591f"
+FOREIGN KEY ("ticket_id")
+  REFERENCES "tickets" ("id")
+[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230823220325"]]
+  [1m[36mTRANSACTION (24.1ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (1.5ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (1.0ms)[0m  [1m[34mSELECT pg_advisory_unlock(6241598612536964460)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
