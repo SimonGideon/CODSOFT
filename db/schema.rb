@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_23_212712) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_23_214548) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "booking_stations", force: :cascade do |t|
+    t.string "town"
+    t.string "landmark"
+    t.bigint "track_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["track_id"], name: "index_booking_stations_on_track_id"
+  end
 
   create_table "buses", force: :cascade do |t|
     t.string "bus_model"
@@ -23,7 +32,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_23_212712) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "routes", force: :cascade do |t|
+  create_table "tracks", force: :cascade do |t|
     t.string "route_point_a"
     t.string "route_point_b"
     t.integer "price"
@@ -48,4 +57,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_23_212712) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "booking_stations", "tracks"
 end
