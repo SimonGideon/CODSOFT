@@ -210,3 +210,31 @@ FOREIGN KEY ("track_id")
   [1m[36mTRANSACTION (18.5ms)[0m  [1m[35mCOMMIT[0m
   [1m[35m (0.6ms)[0m  [1m[34mSELECT pg_advisory_unlock(6241598612536964460)[0m
   [1m[36mActiveRecord::SchemaMigration Pluck (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[35m (50.9ms)[0m  [1m[35mCREATE DATABASE "dojang_tbs_development" ENCODING = 'unicode'[0m
+  [1m[35m (0.6ms)[0m  [1m[35mCREATE DATABASE "dojang_tbs_test" ENCODING = 'unicode'[0m
+  [1m[35m (0.8ms)[0m  [1m[34mSELECT pg_try_advisory_lock(6241598612536964460)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (1.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreateTickets (20230823215356)
+  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (220.6ms)[0m  [1m[35mCREATE TABLE "tickets" ("id" bigserial primary key, "booking_ref" character varying, "seat_number" integer, "user_id" bigint NOT NULL, "bus_id" bigint NOT NULL, "track_id" bigint NOT NULL, "booking_station_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_538a036fb9"
+FOREIGN KEY ("user_id")
+  REFERENCES "users" ("id")
+, CONSTRAINT "fk_rails_e59f4f419d"
+FOREIGN KEY ("bus_id")
+  REFERENCES "buses" ("id")
+, CONSTRAINT "fk_rails_3f67cf280b"
+FOREIGN KEY ("track_id")
+  REFERENCES "tracks" ("id")
+, CONSTRAINT "fk_rails_60ccd66215"
+FOREIGN KEY ("booking_station_id")
+  REFERENCES "booking_stations" ("id")
+)[0m
+  [1m[35m (34.5ms)[0m  [1m[35mCREATE INDEX "index_tickets_on_user_id" ON "tickets" ("user_id")[0m
+  [1m[35m (37.0ms)[0m  [1m[35mCREATE INDEX "index_tickets_on_bus_id" ON "tickets" ("bus_id")[0m
+  [1m[35m (56.3ms)[0m  [1m[35mCREATE INDEX "index_tickets_on_track_id" ON "tickets" ("track_id")[0m
+  [1m[35m (36.6ms)[0m  [1m[35mCREATE INDEX "index_tickets_on_booking_station_id" ON "tickets" ("booking_station_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230823215356"]]
+  [1m[36mTRANSACTION (14.5ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (12.5ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (0.6ms)[0m  [1m[34mSELECT pg_advisory_unlock(6241598612536964460)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (0.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_08_23_214548) do
+ActiveRecord::Schema[7.0].define(version: 2023_08_23_215356) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -30,6 +30,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_23_214548) do
     t.integer "rating"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "tickets", force: :cascade do |t|
+    t.string "booking_ref"
+    t.integer "seat_number"
+    t.bigint "user_id", null: false
+    t.bigint "bus_id", null: false
+    t.bigint "track_id", null: false
+    t.bigint "booking_station_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["booking_station_id"], name: "index_tickets_on_booking_station_id"
+    t.index ["bus_id"], name: "index_tickets_on_bus_id"
+    t.index ["track_id"], name: "index_tickets_on_track_id"
+    t.index ["user_id"], name: "index_tickets_on_user_id"
   end
 
   create_table "tracks", force: :cascade do |t|
@@ -58,4 +73,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_08_23_214548) do
   end
 
   add_foreign_key "booking_stations", "tracks"
+  add_foreign_key "tickets", "booking_stations"
+  add_foreign_key "tickets", "buses"
+  add_foreign_key "tickets", "tracks"
+  add_foreign_key "tickets", "users"
 end
