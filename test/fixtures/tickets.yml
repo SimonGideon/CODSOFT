@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  booking_ref: MyString
+  seat_number: 1
+  user: one
+  bus: one
+  track: one
+  booking_station: one
+
+two:
+  booking_ref: MyString
+  seat_number: 1
+  user: two
+  bus: two
+  track: two
+  booking_station: two

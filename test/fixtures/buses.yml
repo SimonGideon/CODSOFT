@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  bus_model: MyString
+  number_of_seats: 1
+  amenities: 
+  rating: 1
+
+two:
+  bus_model: MyString
+  number_of_seats: 1
+  amenities: 
+  rating: 1
